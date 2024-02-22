@@ -19,6 +19,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Swal from 'sweetalert2';
+import EditIcon from "@mui/icons-material/Edit";
+import EditOffTwoToneIcon from '@mui/icons-material/EditOffTwoTone';
 
 import Navbar from "../components/navbar/Navbar";
 
@@ -59,6 +61,7 @@ export default function Register_user_master_nap({ onSearch }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen_Edit, setIsModalOpen_Edit] = useState(false);
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = useState(null);
@@ -76,7 +79,7 @@ export default function Register_user_master_nap({ onSearch }) {
       setIsLoading(true);
       const response = await axios.get(`http://10.17.66.242:3001/api/smart_register/filter-user-master-nap`);
       const data = await response.data;
-      console.log(data);
+      // console.log(data);
       // Add a unique id property to each row
       const rowsWithId = data.map((row, index) => ({
           ...row,
@@ -101,7 +104,7 @@ export default function Register_user_master_nap({ onSearch }) {
       if (Array.isArray(data) && data.length > 0) {
         const firstObject = data[0]; // Get the first object from the array
         const countId = firstObject.count_id;
-        setCountIDcode(countId)
+        // setCountIDcode(countId)
         console.log("Count ID:", countId);
       } else {
         console.log("Data format is unexpected or empty");
@@ -223,8 +226,39 @@ export default function Register_user_master_nap({ onSearch }) {
     setEditedCountData('');
   };
 
+  const handleCloseModal_Edit = () => {
+    setIsModalOpen_Edit(false);
+
+    setIdCode('');
+    setName_data('');
+    setSurname_data('');
+    setfactory_data('');
+    setEmail_data('');
+    setPhone_data('');
+    setUserLogin_data('');
+    setUserPass_data('');
+    setCountStr_data('0');
+    setAdddate_data('');
+    setUpdate_data('');
+
+    setEditedNameData('');
+    setEditedSurnameData('');
+    setEditedEmailData('');
+    setEditedFactoryData('');
+    setEditedPhoneData('');
+    setEditedUserData('');
+    setEditedPassData('');
+    setEditedAddDateData('');
+    setEditedUpDateData('');
+    setEditedCountData('');
+  };
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
+  };
+
+  const handleOpenModal_Edit = () => {
+    setIsModalOpen_Edit(true);
   };
 
   const handleEnterKeyPress = (event) => {
@@ -237,36 +271,43 @@ export default function Register_user_master_nap({ onSearch }) {
   const handleNameDataChange = (event) => {
     setEditedNameData(event.target.value);
     setName_data(event.target.value)
+    setSelectedRecord_Name(event.target.value)
   };
 
   const handleSurnameDataChange = (event) => {
     setEditedSurnameData(event.target.value);
     setSurname_data(event.target.value)
+    setSelectedRecord_Surname(event.target.value)
   };
 
   const handleEmailDataChange = (event) => {
     setEditedEmailData(event.target.value);
     setEmail_data(event.target.value)
+    setSelectedRecord_Email(event.target.value);
   };
 
   const handleFactoryDataChange = (event) => {
     setEditedFactoryData(event.target.value);
     setfactory_data(event.target.value)
+    setSelectedRecord_Factory(event.target.value);
   };
 
   const handlePhoneDataChange = (event) => {
     setEditedPhoneData(event.target.value);
     setPhone_data(event.target.value);
+    setSelectedRecord_Phone(event.target.value);
   };
 
   const handleUserDataChange = (event) => {
     setEditedUserData(event.target.value);
     setUserLogin_data(event.target.value);
+    setSelectedRecord_UserLogin(event.target.value);
   };
 
   const handlePassDataChange = (event) => {
     setEditedPassData(event.target.value);
     setUserPass_data(event.target.value);
+    setSelectedRecord_UserPass(event.target.value);
   };
 
   const handleAddDateDataChange = (event) => {
@@ -338,17 +379,17 @@ export default function Register_user_master_nap({ onSearch }) {
     } else if ( idCode == '' || Name_data == '' || Surname_data == '' || Email_data == '' || factory_data == ''
                 || Phone_data == '' || UserLogin_data == '' || UserPass_data == '' 
                 || Adddate_data == '' || Update_data == '') {
-      console.log('idCode >' , idCode);
-      console.log('Name_data >' , Name_data);
-      console.log('Surname_data >' , Surname_data);
-      console.log('Email_data >' , Email_data);
-      console.log('factory_data >' , factory_data);
-      console.log('Phone_data >' , Phone_data);
-      console.log('UserLogin_data >' , UserLogin_data);
-      console.log('UserPass_data >' , UserPass_data);
-      console.log('CountStr_data >' , CountStr_data);
-      console.log('Adddate_data >' , Adddate_data);
-      console.log('Update_data >' , Update_data);
+      // console.log('idCode >' , idCode);
+      // console.log('Name_data >' , Name_data);
+      // console.log('Surname_data >' , Surname_data);
+      // console.log('Email_data >' , Email_data);
+      // console.log('factory_data >' , factory_data);
+      // console.log('Phone_data >' , Phone_data);
+      // console.log('UserLogin_data >' , UserLogin_data);
+      // console.log('UserPass_data >' , UserPass_data);
+      // console.log('CountStr_data >' , CountStr_data);
+      // console.log('Adddate_data >' , Adddate_data);
+      // console.log('Update_data >' , Update_data);
 
       openDialog_Chk();
     } else {
@@ -412,8 +453,8 @@ export default function Register_user_master_nap({ onSearch }) {
   const columns = [
     { field: 'factory', headerName: 'Factory', width: 70 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'id_code', headerName: 'ID Code', width: 100 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
-    { field: 'name_eng', headerName: 'Description EN', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
-    { field: 'surname_eng', headerName: 'Description TH', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
+    { field: 'name_eng', headerName: 'Name', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
+    { field: 'surname_eng', headerName: 'Surname', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
     { field: 'email', headerName: 'E-Mail', width: 230 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
     { field: 'phone', headerName: 'Phone', width: 70 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'user_login', headerName: 'Username', width: 100 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
@@ -421,7 +462,124 @@ export default function Register_user_master_nap({ onSearch }) {
     { field: 'user_adddate', headerName: 'Add Date', width: 135 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'user_update', headerName: 'Update', width: 135 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'count', headerName: 'Count', width: 80 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
+    { field: 'edit', headerName: 'Edit', width: 80 , headerAlign: 'center' , headerClassName: 'bold-header', align: 'center',
+        renderCell: (params) => {
+          // console.log('Row', params.row); // Add this line to log the row object
+          return (
+            <div>
+              <button
+                className="bg-orange-500 px-2 py-1.5 rounded-xl text-white hover:bg-orange-700 hover:scale-110 duration-300 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-opacity-50"
+                onClick={() => { handleEditClick(params.row); setIsModalOpen_Edit(true);}}
+              >
+                <EditIcon />
+              </button>
+            </div>
+          );
+        },
+    },
   ]
+
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [selectedRecord_IdCode, setSelectedRecord_IdCode] = useState(null);
+  const [selectedRecord_Name, setSelectedRecord_Name] = useState(null);
+  const [selectedRecord_Surname, setSelectedRecord_Surname] = useState(null);
+  const [selectedRecord_UserLogin, setSelectedRecord_UserLogin] = useState(null);
+  const [selectedRecord_UserPass, setSelectedRecord_UserPass] = useState(null);
+  const [selectedRecord_Email, setSelectedRecord_Email] = useState(null);
+  const [selectedRecord_Count, setSelectedRecord_Count] = useState(null);
+  const [selectedRecord_Factory, setSelectedRecord_Factory] = useState(null);
+  const [selectedRecord_AddDate, setSelectedRecord_AddDate] = useState(null);
+  const [selectedRecord_Phone, setSelectedRecord_Phone] = useState(null);
+  const [selectedRecord_UpDate, setSelectedRecord_UpDate] = useState(null);
+
+  const handleEditClick = (row) => {
+    setSelectedRecord_IdCode(row.id_code)
+    setSelectedRecord_Name(row.name_eng)
+    setSelectedRecord_Surname(row.surname_eng)
+    setSelectedRecord_UserLogin(row.user_login)
+    setSelectedRecord_UserPass(row.user_password)
+    setSelectedRecord_Email(row.email)
+    setSelectedRecord_Count(row.count)
+    setSelectedRecord_Factory(row.factory)
+    setSelectedRecord_AddDate(row.user_adddate)
+    setSelectedRecord_Phone(row.phone)
+    setSelectedRecord_UpDate(row.user_update)
+    setSelectedRecord(row);
+  };
+
+  const handleSaveEdit = () => {
+        if ( selectedRecord_Name == '' || selectedRecord_UserLogin == '' || selectedRecord_Surname == '' || selectedRecord_UserPass == '' 
+        || selectedRecord_Email == '' || selectedRecord_Factory == '' || selectedRecord_Phone == '' || selectedRecord_IdCode == '' 
+        ) {
+        openDialog_Chk();
+        } else {
+        const swalWithZIndex = Swal.mixin({
+        customClass: {
+        popup: 'my-swal-popup', // Define a custom class for the SweetAlert popup
+        },
+        });
+        handleCloseModal_Edit();
+
+        swalWithZIndex.fire({
+        title: "Confirm Save Edit",
+        text: "Are you sure you want to save edit the data?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Save",
+        cancelButtonText: "Cancel",
+        }).then((result) => {
+        if (result.isConfirmed) {
+        // User confirmed, proceed with data saving
+        // Delete existing data
+        axios
+        .get(
+          `http://10.17.66.242:3001/api/smart_register/update-user-master-nap?name=${selectedRecord_Name}&surname=${selectedRecord_Surname}&login=${selectedRecord_UserLogin}&password=${selectedRecord_UserPass}&email=${selectedRecord_Email}&factory=${selectedRecord_Factory}&phone=${selectedRecord_Phone}&update=${Update_format}&id_code=${selectedRecord_IdCode}`
+        )
+        .then(() => {
+          // After all requests are completed, fetch the updated data
+          return fetchUserMasterNAP();
+        })
+        .then(() => {
+          // Success notification
+          Swal.fire({
+            icon: "success",
+            title: "Edit Success",
+            text: "User master NAP Edited successfully",
+            confirmButtonText: "OK",
+          });
+
+          // Close the modal
+          // handleCloseModal();
+        })
+        .catch((error) => {
+          console.error("Error saving data:", error);
+          // Handle the error or display an error message using Swal
+          Swal.fire({
+            icon: "error",
+            title: "Edit Error",
+            text: "An error occurred while editing data",
+            confirmButtonText: "OK",
+          });
+        });
+        }
+        });
+
+        // Set a higher z-index for the SweetAlert dialog
+        document.querySelector('.my-swal-popup').style.zIndex = '9999';
+        }
+  }
+
+  // Get current date
+  const currentDate = new Date();
+  // Extract day, month, and year
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1; // January is 0, so we add 1
+  const year = currentDate.getFullYear();
+  // Format day, month, and year with leading zeros if necessary
+  const formattedDay = day < 10 ? '0' + day : day;
+  const formattedMonth = month < 10 ? '0' + month : month;
+  // Create the date string in "dd/mm/yyyy" format
+  const Update_format = `${formattedDay}/${formattedMonth}/${year}`;
 
   return (
     <>
@@ -445,7 +603,7 @@ export default function Register_user_master_nap({ onSearch }) {
                 endIcon={<AddToPhotosIcon />}
                 >ADD USER MASTER NAP
             </Button>
-            <Box sx={{width: '1345px' , height: 510 , marginTop: '10px' , marginLeft: '45px'}}>
+            <Box sx={{width: '1430px' , height: 510 , marginTop: '10px' , marginLeft: '45px'}}>
                   <DataGrid
                     columns={columns}
                     // disableColumnFilter
@@ -668,6 +826,174 @@ export default function Register_user_master_nap({ onSearch }) {
                       </Button>
                 </DialogActions>
             </Dialog>
+
+            {/* Modal for Edit data  */}
+            <Modal
+                open={isModalOpen_Edit}
+                onClose={handleCloseModal_Edit}
+                aria-labelledby="key-weight-modal-title"
+                aria-describedby="key-weight-modal-description"
+            >
+                <Box sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 725 , height: 590 , bgcolor: '#B4D4FF', boxShadow: 24, p: 4 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' , height: 20 , marginBottom: 20}}>
+                        <div style={{width: '100%' ,fontWeight: 'bold' , fontSize: 20 , textAlign: 'center' }}>
+                            <label htmlFor="" >EDIT USER MASTER NAP</label>
+                        </div>
+                        <div>
+                            <IconButton onClick={handleCloseModal_Edit} style={{position: 'absolute', top: '10px', right: '10px',}}>
+                                <CloseIcon style={{fontSize: '25px', color: 'white', backgroundColor: '#E55604'}} /> 
+                            </IconButton>
+                        </div>
+                    </div>
+                    <div style={{ height: 450 , backgroundColor: '#E4FBFF' }}>
+                        <div>
+                            <TextField
+                              disabled
+                              id="outlined-disabled"
+                              label="- ID Code -"
+                              value={selectedRecord_IdCode && selectedRecord_IdCode !== '' ? selectedRecord_IdCode : ''}
+                              onChange={handleIdCodeChange}
+                              onKeyDown={handleEnterKeyPress} //combinedHandler //handleEnterKeyPress
+                              InputProps={{
+                                style: {fontWeight: 'bold'}, // Changing font color to blue
+                              }}
+                              style={{backgroundColor: '#EEF5FF' , marginLeft: 20 , marginTop: 20 , width: 300 }}
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                              id="outlined-disabled"
+                              label="- Name -"
+                              value={editedNameData !== '' ? editedNameData : selectedRecord_Name}
+                              onChange={handleNameDataChange}
+                              style={{backgroundColor: 'white' , marginLeft: 20 , marginTop: 15 , width: 300}}
+                            />
+
+                          <TextField
+                              id="outlined-disabled"
+                              label="- Username Login -"
+                              value={editedUserData !== '' ? editedUserData : selectedRecord_UserLogin}
+                              onChange={handleUserDataChange}
+                              style={{backgroundColor: 'white' , marginLeft: 20 , marginTop: 15 , width: 300 }}
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                              id="outlined-disabled"
+                              label="- Surname -"
+                              value={editedSurnameData !== '' ? editedSurnameData : selectedRecord_Surname}
+                              onChange={handleSurnameDataChange}
+                              style={{backgroundColor: 'white' , marginLeft: 20 , marginTop: 15 , width: 300}}
+                            />
+
+                            <TextField
+                              id="outlined-disabled"
+                              label="- Password Login -"
+                              value={editedPassData !== '' ? editedPassData : selectedRecord_UserPass}
+                              onChange={handlePassDataChange}
+                              style={{backgroundColor: 'white' ,  marginLeft: 20 , marginTop: 15  , width: 300 }}
+                              type={showPassword ? 'text' : 'password'}
+                              variant="outlined"
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      aria-label="toggle password visibility"
+                                      onClick={handleClickShowPassword}
+                                      onMouseDown={handleMouseDownPassword}
+                                      edge="end"
+                                    >
+                                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                              id="outlined-disabled"
+                              label="- E-mail -"
+                              value={editedEmailData !== '' ? editedEmailData : selectedRecord_Email}
+                              onChange={handleEmailDataChange}
+                              style={{backgroundColor: 'white' ,  marginLeft: 20 , marginTop: 15  , width: 300}}
+                            />
+
+                            <TextField
+                              disabled
+                              id="outlined-disabled"
+                              label="- Count Storage -"
+                              type="number"
+                              value={editedCountData !== '' ? editedCountData : selectedRecord_Count}
+                              onChange={handleCountDataChange}
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              style={{backgroundColor: '#EEF5FF' ,  marginLeft: 20 , marginTop: 15  , width: 300}}
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                              // disabled
+                              id="outlined-disabled"
+                              label="- Factory -"
+                              value={editedFactoryData !== '' ? editedFactoryData : selectedRecord_Factory}
+                              onChange={handleFactoryDataChange}
+                              style={{backgroundColor: 'white' ,  marginLeft: 20 , marginTop: 15  , width: 300}}
+                            />
+
+                            <TextField
+                              disabled
+                              id="outlined-disabled"
+                              label="- Adddate -"
+                              // value={Adddate_data}
+                              value={editedAddDateData !== '' ? editedAddDateData : selectedRecord_AddDate}
+                              onChange={handleAddDateDataChange}
+                              style={{backgroundColor: '#EEF5FF' ,  marginLeft: 20 , marginTop: 15  , width: 300}}
+                            />
+                        </div>
+
+                        <div>
+                            <TextField
+                              // disabled
+                              id="outlined-disabled"
+                              label="- Internal Phone -"
+                              // value={handlePhoneDataChange}
+                              value={editedPhoneData !== '' ? editedPhoneData : selectedRecord_Phone}
+                              onChange={handlePhoneDataChange}
+                              // value={Phone_data === '' ? ' ' : '-'}
+                              style={{backgroundColor: 'white' ,  marginLeft: 20 , marginTop: 15  , width: 300}}
+                            />
+
+                            <TextField
+                              disabled
+                              id="outlined-disabled"
+                              label="- Update -"
+                              value={Update_format}
+                              // value={editedUpDateData !== '' ? editedUpDateData : selectedRecord_UpDate}
+                              onChange={handleUpDateDataChange}
+                              style={{backgroundColor: '#EEF5FF' ,  marginLeft: 20 , marginTop: 15  , width: 300}}
+                            />        
+                        </div>
+
+                        <div>
+                            
+                        </div>
+                    </div>
+                    <div style={{display: 'flex', justifyContent: 'flex-end' , marginTop: 10 , height: 45 }}>
+                        <Button variant="contained" startIcon={<CancelIcon />} onClick={handleCloseModal_Edit} className="btn_hover" style={{backgroundColor: 'lightgray' , color: 'black' , width: 120 , height: 40 , marginRight: 10 , boxShadow: '3px 3px 5px grey'}}>
+                            Cancel
+                        </Button>
+                        <Button variant="contained" endIcon={<EditOffTwoToneIcon />} onClick={handleSaveEdit}  className="btn_hover" style={{backgroundColor: 'orange' , color: 'black' , width: 120 , height: 40 , boxShadow: '3px 3px 5px grey'}}>
+                            EDIT
+                        </Button>
+                    </div>
+                </Box>
+            </Modal>
         </Box>
     </>
   );
