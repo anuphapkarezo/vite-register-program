@@ -459,8 +459,8 @@ export default function Register_user_master_nap({ onSearch }) {
     { field: 'phone', headerName: 'Phone', width: 70 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'user_login', headerName: 'Username', width: 100 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'user_password', headerName: 'Password', width: 100 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
-    { field: 'user_adddate', headerName: 'Add Date', width: 135 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
-    { field: 'user_update', headerName: 'Update', width: 135 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
+    { field: 'user_adddate', headerName: 'Add Date', width: 160 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
+    { field: 'user_update', headerName: 'Update', width: 160 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'count', headerName: 'Count', width: 80 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'edit', headerName: 'Edit', width: 80 , headerAlign: 'center' , headerClassName: 'bold-header', align: 'center',
         renderCell: (params) => {
@@ -508,6 +508,7 @@ export default function Register_user_master_nap({ onSearch }) {
   };
 
   const handleSaveEdit = () => {
+        console.log('add date' , selectedRecord_AddDate);
         if ( selectedRecord_Name == '' || selectedRecord_UserLogin == '' || selectedRecord_Surname == '' || selectedRecord_UserPass == '' 
         || selectedRecord_Email == '' || selectedRecord_Factory == '' || selectedRecord_Phone == '' || selectedRecord_IdCode == '' 
         ) {
@@ -533,7 +534,7 @@ export default function Register_user_master_nap({ onSearch }) {
         // Delete existing data
         axios
         .get(
-          `http://10.17.66.242:3001/api/smart_register/update-user-master-nap?name=${selectedRecord_Name}&surname=${selectedRecord_Surname}&login=${selectedRecord_UserLogin}&password=${selectedRecord_UserPass}&email=${selectedRecord_Email}&factory=${selectedRecord_Factory}&phone=${selectedRecord_Phone}&update=${Update_format}&id_code=${selectedRecord_IdCode}`
+          `http://10.17.66.242:3001/api/smart_register/update-user-master-nap?name=${selectedRecord_Name}&surname=${selectedRecord_Surname}&login=${selectedRecord_UserLogin}&password=${selectedRecord_UserPass}&email=${selectedRecord_Email}&factory=${selectedRecord_Factory}&phone=${selectedRecord_Phone}&update=${Update_format}&id_code=${selectedRecord_IdCode}&add_date=${selectedRecord_AddDate}`
         )
         .then(() => {
           // After all requests are completed, fetch the updated data
@@ -603,7 +604,7 @@ export default function Register_user_master_nap({ onSearch }) {
                 endIcon={<AddToPhotosIcon />}
                 >ADD USER MASTER NAP
             </Button>
-            <Box sx={{width: '1430px' , height: 510 , marginTop: '10px' , marginLeft: '45px'}}>
+            <Box sx={{width: '1475px' , height: 510 , marginTop: '10px' , marginLeft: '45px'}}>
                   <DataGrid
                     columns={columns}
                     // disableColumnFilter
