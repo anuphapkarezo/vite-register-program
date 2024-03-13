@@ -21,6 +21,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Swal from 'sweetalert2';
 import Autocomplete from "@mui/material/Autocomplete";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverSharpIcon from '@mui/icons-material/DeleteForeverSharp';
 
 import Navbar from "../components/navbar/Navbar";
 import { update } from "lodash";
@@ -49,6 +50,13 @@ export default function Register_user_system_role({ onSearch }) {
   const [selectedRecord_SystemName_old, setSelectedRecord_SystemName_old] = useState(null);
   const [selectedRecord_RoleNo_old, setSelectedRecord_RoleNo_old] = useState(null);
   const [selectedRecord_RoleName_old, setSelectedRecord_RoleName_old] = useState(null);
+
+  const [selectedRecord_IdCode_Del, setSelectedRecord_IdCode_Del] = useState(null);
+  const [selectedRecord_SystemNo_Del, setSelectedRecord_SystemNo_Del] = useState(null);
+  const [selectedRecord_SystemName_Del, setSelectedRecord_SystemName_Del] = useState(null);
+  const [selectedRecord_RoleNo_Del, setSelectedRecord_RoleNo_Del] = useState(null);
+  const [selectedRecord_RoleName_Del, setSelectedRecord_RoleName_Del] = useState(null);
+  const [selectedRecord_Update_Del, setSelectedRecord_Update_Del] = useState(null);
 
   const [CountSystem, setCountSystem] = useState(0);
   const [CountMapSystem, setCountMapSystem] = useState('');
@@ -485,20 +493,97 @@ export default function Register_user_system_role({ onSearch }) {
     // setSelectedRecord(row);
   };
 
+  const handleDeleteClick = (row) => {
+    setSelectedRecord_IdCode_Del(row.user_name_naps)
+    setSelectedRecord_SystemNo_Del(row.system_no)
+    setSelectedRecord_SystemName_Del(row.system_name)
+    setSelectedRecord_RoleNo_Del(row.role_no)
+    setSelectedRecord_RoleName_Del(row.role_type)
+    setSelectedRecord_Update_Del(row.update_date)
+  };
+
+  const handleSetNull = () => {
+      setSelectedRecord_IdCode_Del(null)
+      setSelectedRecord_SystemNo_Del(null)
+      setSelectedRecord_SystemName_Del(null)
+      setSelectedRecord_RoleNo_Del(null)
+      setSelectedRecord_RoleName_Del(null)
+      setSelectedRecord_Update_Del(null)
+  }
+
+  const handleDelete = (row) => {
+    console.log('user_name_naps >', selectedRecord_IdCode_Del);
+    console.log('system_no >', selectedRecord_SystemNo_Del);
+    console.log('system_name >', selectedRecord_SystemName_Del);
+    console.log('role_no >', selectedRecord_RoleNo_Del);
+    console.log('role_type >', selectedRecord_RoleName_Del);
+    console.log('Update >', selectedRecord_Update_Del);
+    if ( selectedRecord_IdCode_Del == null || selectedRecord_SystemNo_Del == null || selectedRecord_SystemName_Del == null 
+        || selectedRecord_RoleNo_Del == null || selectedRecord_RoleName_Del == null || selectedRecord_Update_Del == null
+        ) {
+        } else {
+        const swalWithZIndex = Swal.mixin({
+          customClass: {
+          popup: 'my-swal-popup', // Define a custom class for the SweetAlert popup
+          },
+          });
+        swalWithZIndex.fire({
+          title: "Confirm Delete",
+          text: "Are you sure you want to Delete the data?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, Delete",
+          cancelButtonText: "Cancel",
+          }).then((result) => {
+          if (result.isConfirmed) {
+              // User confirmed, proceed with data saving
+              // Delete existing data
+              axios
+              .get(
+                `http://10.17.66.242:3001/api/smart_register/delete-map-user-system-role?user_name_naps=${selectedRecord_IdCode_Del}&system_no=${selectedRecord_SystemNo_Del}&system_name=${selectedRecord_SystemName_Del}&role_no=${selectedRecord_RoleNo_Del}&role_type=${selectedRecord_RoleName_Del}&update_date=${selectedRecord_Update_Del}`
+              )
+              .then(() => {
+                // After all requests are completed, fetch the updated data
+                return fetchUserSystemRole();
+              })
+              .then(() => {
+                // Success notification
+                Swal.fire({
+                  icon: "success",
+                  title: "Delete Success",
+                  text: "Map user system role Deleted successfully",
+                  confirmButtonText: "OK",
+                });
+                handleSetNull()
+                // Close the modal
+                // handleCloseModal();
+              })
+              .catch((error) => {
+                console.error("Error Deleting data:", error);
+                // Handle the error or display an error message using Swal
+                Swal.fire({
+                  icon: "error",
+                  title: "Delete Error",
+                  text: "An error occurred while Deleting data",
+                  confirmButtonText: "OK",
+                });
+              });
+          } else {
+            handleSetNull()
+          }
+          });
+
+          // Set a higher z-index for the SweetAlert dialog
+          document.querySelector('.my-swal-popup').style.zIndex = '9999';
+    }
+  }
+
+  useEffect(() => {
+    handleDelete();
+  }, [selectedRecord_IdCode_Del, selectedRecord_SystemNo_Del, selectedRecord_SystemName_Del, 
+  selectedRecord_RoleNo_Del, selectedRecord_RoleName_Del, selectedRecord_Update_Del]);
+
   const handleSave_Edit = (row) => {
-        // console.log('user_name_naps >',selectedRecord_IdCode_old);
-        // console.log('system_no >',selectedRecord_SystemNo_old);
-        // console.log('system_name >',selectedRecord_SystemName_old);
-        // console.log('role_no >',selectedRecord_RoleNo_old);
-        // console.log('role_type >',selectedRecord_RoleName_old);
-
-        // console.log('---------------------------------------------');
-
-        // console.log('user_name_naps >>>',selectedRecord_IdCode);
-        // console.log('system_no >>>',selectedRecord_SystemNo);
-        // console.log('system_name >>>',selectedRecord_SystemName);
-        // console.log('role_no >>>',selectedRecord_RoleNo);
-        // console.log('role_type >>>',selectedRecord_RoleName);
         if ( selectedRecord_IdCode == '' || selectedRecord_SystemNo == '' || selectedRecord_SystemName == '' 
         || selectedRecord_RoleNo == '' || selectedRecord_RoleName == '' || Update == ''
         ) {
@@ -535,7 +620,7 @@ export default function Register_user_system_role({ onSearch }) {
           Swal.fire({
             icon: "success",
             title: "Edit Success",
-            text: "User master NAP Edited successfully",
+            text: "Map user system role Edited successfully",
             confirmButtonText: "OK",
           });
 
@@ -543,7 +628,7 @@ export default function Register_user_system_role({ onSearch }) {
           // handleCloseModal();
         })
         .catch((error) => {
-          console.error("Error saving data:", error);
+          console.error("Error Editing data:", error);
           // Handle the error or display an error message using Swal
           Swal.fire({
             icon: "error",
@@ -577,6 +662,21 @@ export default function Register_user_system_role({ onSearch }) {
                 onClick={() => { handleEditClick(params.row); setIsModalOpen_Edit(true);}}
               >
                 <EditIcon />
+              </button>
+            </div>
+          );
+        },
+    },
+    { field: 'delete', headerName: 'Delete', width: 80 , headerAlign: 'center' , headerClassName: 'bold-header', align: 'center',
+        renderCell: (params) => {
+          // console.log('Row', params.row); // Add this line to log the row object
+          return (
+            <div>
+              <button
+                className="bg-red-500 px-2 py-1.5 rounded-xl text-white hover:bg-red-700 hover:scale-110 duration-300 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50"
+                onClick={() => { handleDeleteClick(params.row);}}
+              >
+                <DeleteForeverSharpIcon />
               </button>
             </div>
           );
@@ -616,7 +716,7 @@ export default function Register_user_system_role({ onSearch }) {
                 endIcon={<AddToPhotosIcon />}
                 >ADD MAP USER SYSTEM ROLE
             </Button>
-            <Box sx={{width: '1180px' , height: 510 , marginTop: '10px' , marginLeft: '45px'}}>
+            <Box sx={{width: '1255px' , height: 510 , marginTop: '10px' , marginLeft: '45px'}}>
                   <DataGrid
                     columns={columns}
                     // disableColumnFilter
