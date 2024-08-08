@@ -142,10 +142,10 @@ export default function Navbar({ onToggle }) {
         setMenuName("Map user system role");
         setMenuIcon(<img src="/data-complexity.png" alt="" width={30} />);
         break;
-      // case "/env_scrap_detail_weight_by_date":
-      //   setMenuName("Details Weight by Date");
-      //   setMenuIcon(<img src="/calendar.png" alt="" width={30} />);
-      //   break;
+      case "/register_system_detail":
+        setMenuName("System Detail");
+        setMenuIcon(<img src="/system_detail.png" alt="" width={30} />);
+        break;
       // case "/env_scrap_prices_list":
       //   setMenuName("Master Prices List");
       //   setMenuIcon(<img src="/price-list.png" alt="" width={30} />);
@@ -321,13 +321,13 @@ export default function Navbar({ onToggle }) {
           </List>
 
           {/* // Details weight by Date*/}
-          {/* <List open={open}>
+          <List open={open}>
             <ListItem
-              onClick={() => setMenuName("Details weight by Date")}
+              onClick={() => setMenuName("System Detail")}
               disablePadding
               sx={{ display: "block", color: "black" }}
               component={Link}
-              to="/env_scrap_detail_weight_by_date"
+              to="/register_system_detail"
             >
               <ListItemButton
                 sx={{
@@ -347,16 +347,16 @@ export default function Navbar({ onToggle }) {
                     },
                   }}
                 >
-                  <img src="/calendar.png" alt="" width={30} />
+                  <img src="/system_detail.png" alt="" width={30} />
                
                 </ListItemIcon>
                 <ListItemText
-                  primary="Details Weight"
+                  primary="System Detail"
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
             </ListItem>
-          </List> */}
+          </List>
 
           {/* // Master Prices List*/}
           {/* <List open={open}>

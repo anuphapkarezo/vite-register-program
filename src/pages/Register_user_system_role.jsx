@@ -126,14 +126,14 @@ export default function Register_user_system_role({ onSearch }) {
       // const response = await axios.get(`http://10.17.66.242:3001/api/smart_register/filter-count-user-system-role?username_nap=Anupab&system_no=1&system_name=Factory%20supply%20consumption%20management`);
 
       const data = await response.data;
-      console.log("data:", data);
+      // console.log("data:", data);
       
       setDistinctCountUser(data);
       if (Array.isArray(data) && data.length > 0) {
         const firstObject = data[0]; // Get the first object from the array
         const countUser = firstObject.count_role;
         setCountSystem(countUser)
-        console.log("Count User:", countUser);
+        // console.log("Count User:", countUser);
       } else {
         console.log("Data format is unexpected or empty");
       }
@@ -421,7 +421,10 @@ export default function Register_user_system_role({ onSearch }) {
             )
             .then(() => {
               // After all requests are completed, fetch the updated data
-              return fetchUserSystemRole();
+              return fetchUserSystemRole()
+                .then(() => {
+                  return fetchDataSystem();
+                })
             })
             .then(() => {
               // Success notification
@@ -512,12 +515,12 @@ export default function Register_user_system_role({ onSearch }) {
   }
 
   const handleDelete = (row) => {
-    console.log('user_name_naps >', selectedRecord_IdCode_Del);
-    console.log('system_no >', selectedRecord_SystemNo_Del);
-    console.log('system_name >', selectedRecord_SystemName_Del);
-    console.log('role_no >', selectedRecord_RoleNo_Del);
-    console.log('role_type >', selectedRecord_RoleName_Del);
-    console.log('Update >', selectedRecord_Update_Del);
+    // console.log('user_name_naps >', selectedRecord_IdCode_Del);
+    // console.log('system_no >', selectedRecord_SystemNo_Del);
+    // console.log('system_name >', selectedRecord_SystemName_Del);
+    // console.log('role_no >', selectedRecord_RoleNo_Del);
+    // console.log('role_type >', selectedRecord_RoleName_Del);
+    // console.log('Update >', selectedRecord_Update_Del);
     if ( selectedRecord_IdCode_Del == null || selectedRecord_SystemNo_Del == null || selectedRecord_SystemName_Del == null 
         || selectedRecord_RoleNo_Del == null || selectedRecord_RoleName_Del == null || selectedRecord_Update_Del == null
         ) {
@@ -544,7 +547,10 @@ export default function Register_user_system_role({ onSearch }) {
               )
               .then(() => {
                 // After all requests are completed, fetch the updated data
-                return fetchUserSystemRole();
+                fetchUserSystemRole()
+                  .then(() => {
+                    fetchDataSystem();
+                  });
               })
               .then(() => {
                 // Success notification
@@ -613,7 +619,10 @@ export default function Register_user_system_role({ onSearch }) {
         )
         .then(() => {
           // After all requests are completed, fetch the updated data
-          return fetchUserSystemRole();
+          fetchUserSystemRole()
+            .then(() => {
+              fetchDataSystem();
+            });
         })
         .then(() => {
           // Success notification
@@ -687,6 +696,8 @@ export default function Register_user_system_role({ onSearch }) {
   const columns_system = [
     { field: 'system_no', headerName: 'System no.', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'system_name', headerName: 'System name', width: 350 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
+    { field: 'use_server', headerName: 'Server', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
+    { field: 'port_no', headerName: 'Port no.', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
   ]
 
   const columns_role = [
@@ -999,7 +1010,7 @@ export default function Register_user_system_role({ onSearch }) {
                 aria-labelledby="key-weight-modal-title"
                 aria-describedby="key-weight-modal-description"
             >
-                <Box sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 567 , height: 650 , bgcolor: '#B4D4FF', boxShadow: 24, p: 4 }}>
+                <Box sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 870 , height: 650 , bgcolor: '#B4D4FF', boxShadow: 24, p: 4 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' , height: 20 , marginBottom: 20}}>
                         <div style={{width: '100%' ,fontWeight: 'bold' , fontSize: 20 , textAlign: 'center' }}>
                             <label htmlFor="" >DATA FOR SYSTEM</label>
@@ -1011,7 +1022,7 @@ export default function Register_user_system_role({ onSearch }) {
                         </div>
                         
                     </div>
-                    <div style={{border: '1px solid black' , height: 560 , backgroundColor: '#E4FBFF' }}>
+                    <div style={{border: '1px solid black' , height: 560, width:825 , backgroundColor: '#E4FBFF' }}>
                         <DataGrid
                         columns={columns_system}
                         // disableColumnFilter
@@ -1019,6 +1030,7 @@ export default function Register_user_system_role({ onSearch }) {
                         rows={distinctDataSystem}
                       />
                     </div>
+                    
                 </Box>
             </Modal>
 
@@ -1040,7 +1052,7 @@ export default function Register_user_system_role({ onSearch }) {
                         </div>
                         
                     </div>
-                    <div style={{border: '1px solid black' , height: 560 , backgroundColor: '#E4FBFF' }}>
+                    <div style={{border: '1px solid black' , height: 560, width:377 , backgroundColor: '#E4FBFF' }}>
                         <DataGrid
                         columns={columns_role}
                         // disableColumnFilter

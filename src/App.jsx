@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Navbar from "./components/navbar/Navbar";
 import Register_user_master_nap from "./pages/Register_user_master_nap";
 import Register_user_system_role from "./pages/Register_user_system_role";
+import Register_system_detail from "./pages/Register_system_detail";
 
 export default function App() {
   
@@ -19,6 +20,7 @@ export default function App() {
               <Route path="/home" element={<Navbar />} />
               <Route path="/register_user_master_nap" element={<Register_user_master_nap />}/>
               <Route path="/register_user_system_role" element={<Register_user_system_role />}/>
+              <Route path="/register_system_detail" element={<Register_system_detail />}/>
               {/* <Route path="/env_scrap_record_weight_daily_transaction" element={<Scrap_Record_Weight_Daily_Transaction />}/>
               <Route path="/env_scrap_summary_weight_date_take_off" element={<Scrap_Summary_Weight_Date_Take_Off />}/>
               <Route path="/env_scrap_detail_weight_by_date" element={<Scrap_Deatil_Weight_by_Date />}/>
