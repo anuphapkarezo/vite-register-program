@@ -146,10 +146,10 @@ export default function Navbar({ onToggle }) {
         setMenuName("System Detail");
         setMenuIcon(<img src="/system_detail.png" alt="" width={30} />);
         break;
-      // case "/env_scrap_prices_list":
-      //   setMenuName("Master Prices List");
-      //   setMenuIcon(<img src="/price-list.png" alt="" width={30} />);
-      //   break;
+      case "/register_update_table":
+        setMenuName("Monitoring Table");
+        setMenuIcon(<img src="/update.png" alt="" width={30} />);
+        break;
       // case "/env_scrap_company_list":
       //   setMenuName("Master Company List");
       //   setMenuIcon(<img src="/communicate.png" alt="" width={30} />);
@@ -352,6 +352,44 @@ export default function Navbar({ onToggle }) {
                 </ListItemIcon>
                 <ListItemText
                   primary="System Detail"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          </List>
+
+          {/* // Monitoring Table*/}
+          <List open={open}>
+            <ListItem
+              onClick={() => setMenuName("Monitoring Table")}
+              disablePadding
+              sx={{ display: "block", color: "black" }}
+              component={Link}
+              to="/register_update_table"
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                    color: "inherit", // Set initial color
+                    "&:hover": {
+                      color: "primary.main", // Change color on hover
+                    },
+                  }}
+                >
+                  <img src="/update.png" alt="" width={30} />
+               
+                </ListItemIcon>
+                <ListItemText
+                  primary="Monitoring Table"
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
