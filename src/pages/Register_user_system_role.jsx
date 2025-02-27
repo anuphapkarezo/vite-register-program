@@ -656,6 +656,8 @@ export default function Register_user_system_role({ onSearch }) {
 
   const columns = [
     { field: 'user_name_naps', headerName: 'Username', width: 160 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
+    { field: 'name_eng', headerName: 'Name', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
+    { field: 'surname_eng', headerName: 'Surname', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
     { field: 'system_no', headerName: 'System No.', width: 150 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
     { field: 'system_name', headerName: 'System Name', width: 350 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'left'},
     { field: 'role_no', headerName: 'Role No.', width: 100 , headerAlign: 'center' , headerClassName: 'bold-header' , align: 'center'},
@@ -727,7 +729,7 @@ export default function Register_user_system_role({ onSearch }) {
                 endIcon={<AddToPhotosIcon />}
                 >ADD MAP USER SYSTEM ROLE
             </Button>
-            <Box sx={{width: '1255px' , height: 510 , marginTop: '10px' , marginLeft: '45px'}}>
+            <Box sx={{width: '1560px' , height: 625 , marginTop: '10px' , marginLeft: '45px'}}>
                   <DataGrid
                     columns={columns}
                     // disableColumnFilter

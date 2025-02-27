@@ -604,7 +604,7 @@ export default function Register_user_master_nap({ onSearch }) {
                 endIcon={<AddToPhotosIcon />}
                 >ADD USER MASTER NAP
             </Button>
-            <Box sx={{width: '1475px' , height: 510 , marginTop: '10px' , marginLeft: '45px'}}>
+            <Box sx={{width: '1480px' , height: 620 , marginTop: '10px' , marginLeft: '45px'}}>
                   <DataGrid
                     columns={columns}
                     // disableColumnFilter
